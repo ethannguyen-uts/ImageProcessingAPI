@@ -4,7 +4,7 @@
   "description": "Modified Readme.",
   "main": "index.js",
   "scripts": {
-    "lint": "eslint '*/**/*.{js,ts,tsx}' --quiet",
+    "lint": "eslint 'src/**/*.{js,ts,tsx}' --quiet",
     "prettier": "prettier --config .prettierrc '*.{js,ts,tsx}'",
     "build": "npx tsc",
     "jasmine": "jasmine",
