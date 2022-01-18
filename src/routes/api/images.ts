@@ -6,10 +6,7 @@ const images = express.Router();
 images.get('/', async (req, res) => {
   //Process the images
   const query = req.query;
-  const outputFileName = `${fileName}_${width.toString().trim()}_${height
-    .toString()
-    .trim()}.jpg`;
-  const outputFilePath = `./assets/thumb/${outputFileName}`;
+
   try {
     const imageResizedFilePath = await resizeImage(
       query.fileName as unknown as string,
@@ -17,7 +14,7 @@ images.get('/', async (req, res) => {
       query.height as unknown as string
     );
     //Send file
-    res.sendFile(imageResizedFilePath);
+    res.status(200).sendFile(imageResizedFilePath);
   } catch (error) {
     if (error instanceof Error) {
       res.status(400).send(error.message);

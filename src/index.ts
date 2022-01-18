@@ -10,3 +10,5 @@ app.use('/api', routes);
 app.listen(port, () => {
   console.log('Listenning at port 3000');
 });
+
+export default app;
