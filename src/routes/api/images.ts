@@ -1,17 +1,15 @@
-import express from 'express';
+import express, { Router } from 'express';
 import { resizeImage } from '../../utilities/imageProcessing';
 
-const images = express.Router();
+const images: Router = express.Router();
 
-images.get('/', async (req, res) => {
+images.get('/', async (req, res): Promise<void> => {
   //Process the images
-  const query = req.query;
-
   try {
-    const imageResizedFilePath = await resizeImage(
-      query.fileName as unknown as string,
-      query.width as unknown as string,
-      query.height as unknown as string
+    const imageResizedFilePath: string = await resizeImage(
+      req.query.fileName as unknown as string,
+      req.query.width as unknown as string,
+      req.query.height as unknown as string
     );
     //Send file
     res.status(200).sendFile(imageResizedFilePath);
