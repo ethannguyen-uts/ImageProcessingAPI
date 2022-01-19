@@ -54,7 +54,7 @@ describe('2. Testing Image Processing Function', () => {
         );
       });
 
-      it('should get the correct output File path and created a file with width input and output height in thumb folder', async () => {
+      it('should get the correct output file path and created a file with width input and output height in thumb folder', async () => {
         const outputFilePath = await resizeImage(
           fileName,
           inputWidth,
