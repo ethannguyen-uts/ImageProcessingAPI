@@ -2,6 +2,7 @@ import { randomInt } from 'crypto';
 import { checkExistFile, resizeImage } from '../../utilities/imageProcessing';
 import { promises as fsPromises } from 'fs';
 import { constants } from 'fs';
+import path from 'path';
 
 describe('2. Testing Image Processing Function', () => {
   describe('2.1 Testing checkExistFile function', () => {
@@ -52,11 +53,17 @@ describe('2. Testing Image Processing Function', () => {
           )
         );
       });
-      it('should created a filewidth input and output height in thumb folder', async () => {
+
+      it('should get the correct output File path and created a file with width input and output height in thumb folder', async () => {
         const outputFilePath = await resizeImage(
           fileName,
           inputWidth,
           inputHeight
+        );
+        expect(outputFilePath).toEqual(
+          path.resolve(
+            `./assets/thumb/${fileName}_${inputWidth}_${inputHeight}.jpg`
+          )
         );
         await expectAsync(
           fsPromises.access(outputFilePath, constants.F_OK)

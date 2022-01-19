@@ -9,7 +9,7 @@ describe('1. Testing endpoint response', () => {
     );
     expect(response.status).toBe(200);
   });
-  it('get the images api endpoint widthout parameters', async () => {
+  it('get the images api endpoint widthout parameters, expect 400 response error', async () => {
     const response = await request.get('/api/images');
     expect(response.status).toBe(400);
   });

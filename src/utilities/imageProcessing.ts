@@ -3,7 +3,7 @@ import { constants } from 'fs';
 import sharp from 'sharp';
 import path from 'path';
 
-const checkExistFile = async (filePath: string) => {
+const checkExistFile = async (filePath: string): Promise<boolean> => {
   try {
     await fsPromises.access(filePath, constants.F_OK);
     return true;
@@ -16,7 +16,7 @@ const resizeImage = async (
   fileName: string,
   inputWidth: string,
   inputHeight: string
-) => {
+): Promise<string> => {
   const width = Number(inputWidth);
   const height = Number(inputHeight);
   //const a = inputWidth as unknown as number;
@@ -43,16 +43,18 @@ const resizeImage = async (
   const outputFilePath = `./assets/thumb/${outputFileName}`;
 
   //Step 1: Check exists original file in directory, if not exist throw new error
-  const existOriginalFile = await checkExistFile(filePath);
+  const existOriginalFile: boolean = await checkExistFile(filePath);
   if (!existOriginalFile)
     throw new Error(
       'File not found in directory, please select from these files: encenadaport, fjord, icelandwaterfall, palmtunnel, santamonica'
     );
   //Step 2: Check if the resized image existed and resize the image if it does not exsist
-  const existProcessedImage = await checkExistFile(outputFilePath);
+  const existProcessedImage: boolean = await checkExistFile(outputFilePath);
   if (!existProcessedImage) {
     //if not exist, resize image and put the image in thumb folder
-    const buffer = await sharp(filePath).resize(width, height).toBuffer();
+    const buffer: Buffer = await sharp(filePath)
+      .resize(width, height)
+      .toBuffer();
     await fsPromises.writeFile(outputFilePath, buffer);
   }
   //Step 3: Serve the processed file in thumb folder
