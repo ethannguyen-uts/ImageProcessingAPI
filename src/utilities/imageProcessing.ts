@@ -42,6 +42,13 @@ const resizeImage = async (
     .trim()}.jpg`;
   const outputFilePath = `./assets/thumb/${outputFileName}`;
 
+  // check if thumb directory exist, create a new thumb folder
+  try {
+    await fsPromises.access('./assets/thumb', constants.F_OK);
+  } catch (error) {
+    await fsPromises.mkdir('./assets/thumb');
+  }
+
   //Step 1: Check exists original file in directory, if not exist throw new error
   const existOriginalFile: boolean = await checkExistFile(filePath);
   if (!existOriginalFile)
